@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liliana ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    color:white;
+    text-align:center;
+    overflow-x:hidden;
+}
+
+section{
+    padding:60px 20px;
+}
+
+h1{
+    font-size:3em;
+    animation: aparecer 2s ease;
+}
+
+@keyframes aparecer{
+    from{opacity:0; transform:translateY(-20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.carta{
+    max-width:700px;
+    margin:auto;
+    font-size:1.2em;
+    line-height:1.7;
+    min-height:120px;
+}
+
+button{
+    padding:15px 30px;
+    border:none;
+    border-radius:30px;
+    font-size:1.1em;
+    cursor:pointer;
+    background:white;
+    color:#ff4b6e;
+    transition:.3s;
+    margin-top:20px;
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+.heart{
+    position:fixed;
+    bottom:-10px;
+    font-size:24px;
+    animation: subir 6s linear infinite;
+}
+
+@keyframes subir{
+    0%{transform:translateY(0);opacity:1;}
+    100%{transform:translateY(-100vh);opacity:0;}
+}
+
+#pregunta{
+    font-size:2em;
+}
+
+#no{
+    position:absolute;
+}
+
+/* juego */
+#zonaJuego{
+    position:relative;
+    height:250px;
+    margin-top:30px;
+}
+
+#corazonJuego{
+    position:absolute;
+    font-size:40px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.mensajeRandom{
+    font-size:1.2em;
+    margin-top:20px;
+}
+
+.contador{
+    font-size:1.3em;
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<section>
+    <h1>Feliz San Valentín, Liliana 💖</h1>
+    <p>2 años y medio contigo han sido los más bonitos de mi vida.</p>
+    <div class="contador" id="contador"></div>
+</section>
+
+<section>
+    <h2>Una carta para ti 💌</h2>
+    <div class="carta" id="carta"></div>
+</section>
+
+<section>
+    <h2>Juego: Atrapa el corazón 😏</h2>
+    <p>Intenta hacer clic en el corazón… si puedes.</p>
+    <div id="zonaJuego">
+        <div id="corazonJuego" onclick="ganar()">❤️</div>
+    </div>
+</section>
+
+<section>
+    <h2>Modo confesión 💭</h2>
+    <button onclick="mensajeAleatorio()">Tócame</button>
+    <p class="mensajeRandom" id="mensajeRandom"></p>
+</section>
+
+<section>
+    <p id="pregunta">¿Quieres ser mi San Valentín… siempre?</p>
+    <button onclick="acepto()">SÍ ❤️</button>
+    <button id="no" onmouseover="escapar()">NO 😢</button>
+</section>
+
+<section>
+    <h2 id="final"></h2>
+</section>
+
+<script>
+
+// CARTA MEJORADA
+const texto = "Liliana ❤️, gracias por cada momento, cada risa, cada abrazo y cada día que hemos construido juntos. Estos 2 años y medio me han enseñado lo que significa amar de verdad y tener paciencia. Eres mi lugar favorito, mi paz y mi tranquilidad. No quiero un futuro sin ti; quiero que sigamos creciendo, aprendiendo y superando todo juntos. Te amo muchísimo.";
+
+let i = 0;
+function escribir(){
+    if(i < texto.length){
+        document.getElementById("carta").innerHTML += texto.charAt(i);
+        i++;
+        setTimeout(escribir,40);
+    }
+}
+escribir();
+
+
+// CONTADOR DE TIEMPO
+const fechaInicio = new Date("2023-08-14");
+function actualizarContador(){
+    const hoy = new Date();
+    const dias = Math.floor((hoy - fechaInicio)/(1000*60*60*24));
+    document.getElementById("contador").innerHTML =
+    "Llevamos " + dias + " días compartiendo amor ❤️";
+}
+actualizarContador();
+
+
+// JUEGO CORAZÓN QUE SE MUEVE
+const corazon = document.getElementById("corazonJuego");
+setInterval(()=>{
+    corazon.style.top = Math.random()*200 + "px";
+    corazon.style.left = Math.random()*80 + "%";
+},800);
+
+function ganar(){
+    for(let i=0;i<30;i++) crearCorazon();
+    alert("¡Me atrapaste! Igual que atrapaste mi corazón ❤️");
+}
+
+
+// MENSAJES DIVERTIDOS
+const mensajes = [
+"Me encantas incluso cuando te enojas 😅",
+"Eres mi lugar seguro ❤️",
+"Contigo todo es más bonito",
+"Tu sonrisa es mi debilidad",
+"Gracias por existir",
+"Quiero viajar contigo por la vida",
+"Eres mi persona favorita"
+];
+
+function mensajeAleatorio(){
+    const random = mensajes[Math.floor(Math.random()*mensajes.length)];
+    document.getElementById("mensajeRandom").innerHTML = random;
+}
+
+
+// BOTÓN NO QUE HUYE
+function escapar(){
+    const boton = document.getElementById("no");
+    boton.style.top = Math.random()*400 + "px";
+    boton.style.left = Math.random()*400 + "px";
+}
+
+
+// RESPUESTA FINAL
+function acepto(){
+    document.getElementById("final").innerHTML =
+    "Sabía que dirías que sí 😍. Gracias por estar en mi vida, Liliana. Prometo seguir cuidando lo nuestro. Te amo ❤️";
+
+    for(let i=0;i<50;i++) crearCorazon();
+}
+
+
+// CORAZONES GENERALES
+setInterval(()=>crearCorazon(),400);
+
+function crearCorazon(){
+    const heart = document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(Math.random()*3+3)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+
+</script>
+
+</body>
+</html>
